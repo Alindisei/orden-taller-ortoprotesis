@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orden de Taller - Ortoprótesis</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #F5F7F8;
+    color: #263238;
+  }
+
+  .container {
+    max-width: 1050px;
+    margin: 30px auto;
+    padding: 20px;
+  }
+
+  /* =========================
+     CABECERA
+     ========================= */
+
+  header {
+    background: #FFFFFF;
+    padding: 28px;
+    border-radius: 16px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 10px rgba(38, 50, 56, 0.07);
+  }
+
+  .cabecera {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    background-color: #E8F0F1;
+  }
+
+  .logo {
+    width: 130px;
+    height: auto;
+    flex-shrink: 0;
+  }
+
+  .titulo {
+    position: absolute;
+    left: 48%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: max-content;
+  }
+
+  .titulo h1 {
+    margin: 0 0 6px;
+    font-size: 30px;
+  }
+
+  h1 {
+    margin: 0 0 6px;
+    font-size: 30px;
+    color: #2F5D62;
+  }
+
+  .subtitle {
+    color: #66757A;
+  }
+
+
+  /* =========================
+     SECCIONES
+     ========================= */
+
+  section {
+    background: #FFFFFF;
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 10px rgba(38, 50, 56, 0.06);
+  }
+
+  h2 {
+    font-size: 20px;
+    margin: 0 0 18px;
+    border-bottom: 1px solid #D8E0E2;
+    padding-bottom: 10px;
+    color: #2F5D62;
+  }
+
+
+  /* =========================
+     GRID Y CAMPOS
+     ========================= */
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #45565B;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px 11px;
+    border: 1px solid #D8E0E2;
+    border-radius: 8px;
+    font: inherit;
+    background: #FFFFFF;
+    color: #263238;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #6B8F95;
+    box-shadow: 0 0 0 3px rgba(107, 143, 149, 0.12);
+  }
+
+  textarea {
+    min-height: 90px;
+    resize: vertical;
+  }
+
+  .full {
+    grid-column: 1 / -1;
+  }
+
+
+  /* =========================
+     CHECKBOXES GENERALES
+     ========================= */
+
+  .check-row {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .check-row label {
+    font-weight: 500;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+
+  /* =========================
+     ELEMENTOS / TARJETAS
+     ========================= */
+
+  .item {
+    border: 1px solid #D8E0E2;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 12px;
+    background: #F8FAFA;
+  }
+
+  .item-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .item-title strong {
+    font-size: 15px;
+    color: #2F5D62;
+  }
+
+
+  /* =========================
+     BOTONES
+     ========================= */
+
+  button {
+    border: 0;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .btn-add {
+    background: #2F5D62;
+    color: #FFFFFF;
+  }
+
+  .btn-add:hover {
+    background: #254B4F;
+  }
+
+  .btn-delete {
+    background: #FCE8E6;
+    color: #B3261E;
+    padding: 7px 10px;
+  }
+
+  .btn-delete:hover {
+    background: #F8DAD7;
+  }
+
+  .primary {
+    background: #2F5D62;
+    color: #FFFFFF;
+  }
+
+  .primary:hover {
+    background: #254B4F;
+  }
+
+  .secondary {
+    background: #FFFFFF;
+    border: 1px solid #D8E0E2;
+    color: #45565B;
+  }
+
+  .secondary:hover {
+    background: #F5F7F8;
+  }
+
+
+  /* =========================
+     BOTONES / ACCIONES INFERIORES
+     ========================= */
+
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: rgba(245, 247, 248, 0.96);
+    padding: 14px 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+
+  /* =========================
+     RESUMEN
+     ========================= */
+
+  .summary {
+    border: 2px dashed #C7D3D6;
+    padding: 18px;
+    border-radius: 10px;
+    background: #FFFFFF;
+  }
+
+  .summary h3 {
+    margin-top: 0;
+    color: #2F5D62;
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 20px;
+  }
+
+  .muted {
+    color: #66757A;
+    font-size: 13px;
+  }
+
+
+  /* =========================
+     TABLA DE MATERIALES
+     ========================= */
+
+  .tabla-materiales {
+    margin-top: 30px;
+    border: 1px solid #D8E0E2;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #FFFFFF;
+  }
+
+  .tabla-materiales-header {
+    display: grid;
+    grid-template-columns: 1.3fr 1.2fr 1fr 0.9fr 1.5fr 80px;
+    align-items: center;
+    padding: 11px 14px;
+    background: #E8F0F1;
+    border-bottom: 1px solid #D8E0E2;
+    font-size: 12px;
+    font-weight: 600;
+    color: #52686C;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .lista-materiales {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .material-item {
+    display: grid;
+    grid-template-columns: 1.3fr 1.2fr 1fr 0.9fr 1.5fr 80px;
+    align-items: center;
+    border-bottom: 1px solid #E5EBED;
+    background: #FFFFFF;
+    transition: background 0.15s ease;
+  }
+
+  .material-item:last-child {
+    border-bottom: none;
+  }
+
+  .material-item:hover {
+    background: #F7FAFA;
+  }
+
+  .material-item .material-info {
+    display: contents;
+  }
+
+  .material-item .material-info > * {
+    padding: 13px 14px;
+    font-size: 13px;
+    color: #66757A;
+  }
+
+  .material-item .material-info strong {
+    color: #263238;
+    font-weight: 600;
+  }
+
+  .material-item .material-info b {
+    font-weight: 600;
+    color: #45565B;
+  }
+
+
+  /* =========================
+     FORMULARIO NUEVO MATERIAL
+     ========================= */
+
+  .material-nuevo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 15px;
+  }
+
+
+  /* =========================
+     FASES DEL PROCESO
+     ========================= */
+
+  #fases {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .bloque-fase {
+    border: 1px solid #D8E0E2;
+    border-radius: 12px;
+    background: #FFFFFF;
+    overflow: hidden;
+  }
+
+  .bloque-fase-titulo {
+    padding: 13px 16px;
+    background: #E8F0F1;
+    border-bottom: 1px solid #D8E0E2;
+    color: #2F5D62;
+    font-size: 14px;
+  }
+
+  .bloque-fase-contenido {
+    padding: 16px;
+  }
+
+
+  /* =========================
+     CHECKBOXES DE LAS FASES
+     ========================= */
+
+  .checkboxes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 9px 14px;
+  }
+
+  .checkboxes label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #52686C;
+    cursor: pointer;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .checkboxes label input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    padding: 0;
+    flex: 0 0 15px;
+    vertical-align: middle;
+    accent-color: #2F5D62;
+  }
+
+  .checkboxes input {
+    margin: 0;
+  }
+
+
+  /* =========================
+     AÑADIR PROCESO MANUAL
+     ========================= */
+
+  .fase-manual {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid #E1E8EA;
+  }
+
+  .fase-manual > label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #66757A;
+  }
+
+  .fase-manual-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .fase-manual-row input {
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .btn-add-proceso {
+    padding: 9px 13px;
+    border: none;
+    border-radius: 7px;
+    background: #6B8F95;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .btn-add-proceso:hover {
+    background: #58797E;
+  }
+
+
+  /* =========================
+     VALIDACIÓN
+     ========================= */
+
+  .check-visto {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #5F8D73;
+  }
+
+  .check-visto input[type="checkbox"] {
+    accent-color: #5F8D73;
+  }
+
+
+  /* =========================
+     RESPONSIVE
+     ========================= */
+
+  @media (max-width: 800px) {
+
+    #fases {
+      grid-template-columns: 1fr;
+    }
+
+    .checkboxes {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 750px) {
+
+    .grid,
+    .grid-2,
+    .summary-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .container {
+      padding: 10px;
+      margin: 10px auto;
+    }
+
+    .material-nuevo {
+      grid-template-columns: 1fr;
+    }
+  }
+
+
+  /* =========================
+     IMPRESIÓN
+     ========================= */
+
+  @media print {
+
+    body {
+      background: white;
+    }
+
+    .container {
+      max-width: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    header,
+    section {
+      box-shadow: none;
+    }
+
+    .actions,
+    .no-print,
+    button {
+      display: none !important;
+    }
+
+    section {
+      break-inside: avoid;
+    }
+  }
+</style>
+</head>
+
+<body>
+<div class="container">
+<header class="cabecera">
+    <img src="logo-ortoalba.png" alt="OrtoAlba" class="logo">
+
+    <div class="titulo">
+        <h1>ORDEN DE TALLER</h1>
+        <div class="subtitle">Registro de fabricación ortoprotésica</div>
+    </div>
+</header>
+
+<form id="ordenForm">
+
+<section>
+  <h2>1. Detalles del orden</h2>
+  <div class="grid">
+    <div class="field">
+      <label>Nº identificación orden</label>
+      <input id="numeroOrden" type="text">
+    </div>
+    <div class="field">
+      <label>Fecha emisión</label>
+      <input id="fechaEmision" type="date">
+    </div>
+    <div class="field">
+      <label>Fecha prevista entrega</label>
+      <input id="fechaEntrega" type="date">
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>2. Datos del paciente</h2>
+  <div class="grid">
+    <div class="field">
+      <label>Nombre/acrónimo</label>
+      <input id="paciente" type="text">
+    </div>
+    <div class="field">
+      <label>Parte del cuerpo afectada</label>
+      <input id="parteAfectada" type="text">
+    </div>
+    <div class="field">
+      <label>Diagnóstico</label>
+      <input id="diagnostico" type="text">
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>3. Datos del prescriptor</h2>
+  <div class="grid">
+    <div class="field">
+      <label>Nombre completo</label>
+      <input id="prescriptor" type="text">
+    </div>
+    <div class="field">
+      <label>Nº colegiado</label>
+      <input id="colegiado" type="text">
+    </div>
+    <div class="field">
+      <label>Hospital/clínica</label>
+      <input id="lugarTrabajo" type="text">
+    </div>
+    <div class="field">
+      <label>Especialidad</label>
+      <input id="especialidad" type="text">
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>4. Datos de medidas</h2>
+  <div class="grid">
+    <div class="field">
+      <label>Medidas del paciente</label>
+      <textarea id="medidas" placeholder="Anota aquí las medidas tomadas..."></textarea>
+    </div>
+    <div class="field">
+      <label>Método usado</label>
+      <select id="metodoMedidas">
+        <option value="">Seleccionar...</option>
+        <option>Medición directa</option>
+        <option>Huella plantar</option>
+        <option>Escaneo 3D</option>
+        <option>Molde yeso</option>
+        <option>Otro</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Técnico toma medidas</label>
+      <input id="tecnicoMedidas" type="text">
+    </div>
+  </div>
+
+  <div class="check-row">
+    <strong>¿Hay pruebas adjuntas?</strong>
+    <label><input type="radio" name="pruebas" value="Sí" onchange="togglePruebas()"> Sí</label>
+    <label><input type="radio" name="pruebas" value="No" checked onchange="togglePruebas()"> No</label>
+  </div>
+
+  <div id="campoPruebas" class="field hidden" style="margin-top:12px; max-width:500px;">
+    <label>¿Cuál?</label>
+    <input id="pruebasCuales" type="text">
+  </div>
+</section>
+
+<section>
+  <h2>5. Datos del producto</h2>
+  <div class="grid">
+    <div class="field">
+      <label>Tipo de ortesis / producto</label>
+      <select id="tipoProducto">
+        <option value="">Seleccionar...</option>
+        <option>Ortesis de miembro inferior</option>
+        <option>Ortesis de miembro superior</option>
+        <option>Ortesis de tronco</option>
+        <option>Plantilla</option>
+        <option>Prótesis</option>
+        <option>Producto de apoyo</option>
+        <option>Otro</option>
+      </select>
+    </div>
+     <div class="field"> 
+      <label>Nombre del producto</label> 
+      <input id="nombreProducto" type="text" placeholder="Ej.: AFO, rancho de los amigos, Jewett..."> 
+    </div>
+    <div class="field">
+      <label>Posición</label>
+      <input id="posicion" type="text" placeholder="Derecha / izquierda / bilateral / otra">
+    </div>
+    <div class="field">
+      <label>Técnico responsable</label>
+      <input id="tecnicoResponsable" type="text">
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>6. Registro de materiales</h2>
+  <p class="muted">Añade todos los componentes utilizados.</p>
+
+  <div class="material-nuevo">
+
+    <div class="field">
+      <label>Componente</label>
+      <select id="materialComponente">
+        <option value="">Seleccionar...</option>
+        <option>Resina</option>
+        <option>EVA</option>
+        <option>Polipropileno</option>
+        <option>Termoplástico</option>
+        <option>Forro</option>
+        <option>Velcro</option>
+        <option>Silicona</option>
+        <option>Espuma</option>
+        <option>Tornillos / fijaciones</option>
+        <option>Correas</option>
+        <option>Otro</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Proveedor</label>
+      <input id="materialProveedor" type="text">
+    </div>
+
+    <div class="field">
+      <label>Referencia</label>
+      <input id="materialReferencia" type="text">
+    </div>
+
+    <div class="field">
+      <label>Lote</label>
+      <input id="materialLote" type="text">
+    </div>
+
+    <div class="field full">
+      <label>Observaciones</label>
+      <input id="materialObservaciones" type="text">
+    </div>
+
+  </div>
+
+  <button type="button" class="btn-add" onclick="addMaterial()">
+    Añadir
+  </button>
+
+  <!-- Tabla de materiales añadidos -->
+  <div class="tabla-materiales">
+
+    <div class="tabla-materiales-header">
+      <div>Componente</div>
+      <div>Proveedor</div>
+      <div>Referencia</div>
+      <div>Lote</div>
+      <div>Observaciones</div>
+      <div></div>
+    </div>
+
+    <div id="materiales" class="lista-materiales"></div>
+
+  </div>
+
+</section>
+<section>
+  <h2>7. Fases del proceso de fabricación</h2>
+  <p class="muted">Selecciona los procesos que correspondan. Puedes añadir manualmente otros procesos.</p>
+
+  <div id="fases"></div>
+</section>
+
+<section>
+  <h2>8. Validación del proceso</h2>
+
+  <div class="grid">
+
+    <div class="field">
+      <label>Técnico responsable / técnico garante</label>
+      <input id="tecnicoFases" type="text">
+    </div>
+
+    <div class="field">
+      <label>Fecha de finalización</label>
+      <input id="fechaFases" type="date">
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>9. Observaciones</h2>
+  <textarea id="observaciones" placeholder="Observaciones, incidencias, modificaciones, adaptación final..."></textarea>
+</section>
+
+</form>
+
+<div class="actions no-print">
+  <button class="primary" type="button" onclick="generarResumen()">📋 Ver resumen</button>
+  <button class="secondary" type="button" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+  <button class="secondary" type="button" onclick="guardarDatos()">💾 Guardar en este navegador</button>
+  <button class="secondary" type="button" onclick="cargarDatos()">↩️ Recuperar datos</button>
+  <button class="secondary" type="button" onclick="limpiarFormulario()">🗑️ Nuevo formulario</button>
+</div>
+
+<section id="resumenSection" class="hidden">
+  <h2>Resumen de la orden</h2>
+  <div id="resumen" class="summary"></div>
+</section>
+
+</div>
+
+<script>
+let materialCount = 0;
+let faseCount = 0;
+
+const opcionesMaterial = [
+  "Resina", "EVA", "Polipropileno", "Termoplástico",
+  "Forro", "Velcro", "Silicona", "Espuma",
+  "Tornillos / fijaciones", "Correas", "Otro"
+];
+
+const opcionesMolde = [
+  "Yeso", "Venda de escayola", "Venda de resina",
+  "Escaneo 3D", "Otro"
+];
+
+const opcionesMetodo = [
+  "Conformado", "Termoconformado", "Moldeado",
+  "Laminado", "Impresión 3D", "Otro"
+];
+
+const opcionesHerramientas = [
+  "Desbastadora", "Pulidora", "Tijeras", "Fresas",
+  "Sierra", "Taladro", "Herramientas manuales", "Otro"
+];
+
+function options(arr) {
+  return '<option value="">Seleccionar...</option>' +
+    arr.map(x => `<option>${x}</option>`).join('');
+}
+
+function addMaterial(data = {}) {
+
+  const componente = data.componente !== undefined
+  ? data.componente
+  : document.getElementById("materialComponente").value;
+
+const proveedor = data.proveedor !== undefined
+  ? data.proveedor
+  : document.getElementById("materialProveedor").value;
+
+const referencia = data.referencia !== undefined
+  ? data.referencia
+  : document.getElementById("materialReferencia").value;
+
+const lote = data.lote !== undefined
+  ? data.lote
+  : document.getElementById("materialLote").value;
+
+const observaciones = data.observaciones !== undefined
+  ? data.observaciones
+  : document.getElementById("materialObservaciones").value;
+
+  if (!componente) {
+    alert("Selecciona un componente.");
+    return;
+  }
+
+  materialCount++;
+
+  const div = document.createElement("div");
+  div.className = "material-item";
+
+  div.dataset.componente = componente;
+  div.dataset.proveedor = proveedor;
+  div.dataset.referencia = referencia;
+  div.dataset.lote = lote;
+  div.dataset.observaciones = observaciones;
+
+  div.innerHTML = `
+    <div class="material-info">
+      <strong>${componente}</strong>
+      <span>${proveedor || "—"}</span>
+      <span>${referencia || "—"}</span>
+      <span>${lote || "—"}</span>
+      <span>${observaciones || "—"}</span>
+
+      <button type="button" class="btn-delete"
+        onclick="this.closest('.material-item').remove()">
+        Eliminar
+      </button>
+    </div>
+  `;
+
+  document.getElementById("materiales").appendChild(div);
+
+  // Limpiar los campos para introducir el siguiente material
+  document.getElementById("materialComponente").value = "";
+  document.getElementById("materialProveedor").value = "";
+  document.getElementById("materialReferencia").value = "";
+  document.getElementById("materialLote").value = "";
+  document.getElementById("materialObservaciones").value = "";
+}
+
+function addFase(data = {}) {
+
+  const fases = [
+    {
+      titulo: "Obtención del molde",
+      opciones: [
+        "Molde de yeso",
+        "Venda de escayola",
+        "Alginato",
+        "Silicona",
+        "Resina",
+        "Escaneo 3D",
+        "Patrón de papel"
+      ]
+    },
+    {
+      titulo: "Rectificación / modificación",
+      opciones: [
+        "Rectificación manual",
+        "Descarga en puntos de presión",
+        "Alineación de ejes",
+        "Corrección anatómica",
+        "Modificación de modelo digital",
+        "Modificación de archivo STL",
+        "Software CAD"
+      ]
+    },
+    {
+      titulo: "Conformado",
+      opciones: [
+        "Conformado",
+        "Termoconformado",
+        "Laminación",
+        "Impresión 3D",
+        "Fibra de carbono",
+      ]
+    },
+    {
+      titulo: "Tallado / Mecanizado / Montaje",
+      opciones: [
+        "Corte de límites anatómicos",
+        "Desbastado",
+        "Fresado",
+        "Perforado",
+        "Pulido de bordes",
+        "Montaje de articulaciones",
+        "Montaje de refuerzos",
+      ]
+    },
+    {
+      titulo: "Guarnicionería / Encojinados",
+      opciones: [
+        "Forrado",
+        "Encojinado",
+        "Espuma",
+        "EVA",
+        "Silicona",
+        "Correas",
+        "Velcro",
+        "Cierres",
+        "Silicona",
+        "Gel"
+      ]
+    },
+    {
+      titulo: "Acabados",
+      opciones: [
+        "Pulido final",
+        "Redondeado de bordes",
+        "Revisión de acabados",
+        "Limpieza",
+        "Rebarbas"
+      ]
+    },
+    {
+      titulo: "Control de calidad y validación final",
+      opciones: [
+        "Comprobación de medidas",
+        "Comprobación de alineación",
+        "Comprobación del ajuste",
+        "Comprobación de cierres",
+        "Comprobación de articulaciones",
+        "Prueba funcional",
+        "Validación final"
+      ]
+    }
+  ];
+
+  const contenedor = document.getElementById("fases");
+
+  contenedor.innerHTML = "";
+
+  fases.forEach((fase, index) => {
+
+    const bloque = document.createElement("div");
+    bloque.className = "bloque-fase";
+
+    bloque.innerHTML = `
+      <div class="bloque-fase-titulo">
+        <strong>${index + 1}. ${fase.titulo}</strong>
+      </div>
+
+      <div class="bloque-fase-contenido">
+
+        <div class="checkboxes">
+
+          ${fase.opciones.map(opcion => `
+            <label>
+              <input
+                type="checkbox"
+                class="fase-opcion"
+                value="${opcion}">
+              <span>${opcion}</span>
+            </label>
+          `).join("")}
+
+        </div>
+
+        <div class="fase-manual">
+
+          <label>Añadir manualmente</label>
+
+          <div class="fase-manual-row">
+
+            <input
+              type="text"
+              class="fase-otro"
+              placeholder="Escribe otro proceso...">
+
+            <button
+              type="button"
+              class="btn-add-proceso"
+              onclick="anadirProcesoManual(this)">
+              Añadir
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+    `;
+
+    contenedor.appendChild(bloque);
+  });
+
+}
+
+
+function anadirProcesoManual(boton) {
+
+  const bloque = boton.closest(".bloque-fase");
+
+  const input = bloque.querySelector(".fase-otro");
+
+  const texto = input.value.trim();
+
+  if (!texto) {
+    return;
+  }
+
+  const lista = bloque.querySelector(".checkboxes");
+
+  const label = document.createElement("label");
+
+  label.innerHTML = `
+    <input
+      type="checkbox"
+      class="fase-opcion"
+      value="${texto}"
+      checked>
+
+    <span>${texto}</span>
+  `;
+
+  lista.appendChild(label);
+
+  input.value = "";
+}
+
+function togglePruebas() {
+  const si = document.querySelector('input[name="pruebas"]:checked')?.value === "Sí";
+  document.getElementById("campoPruebas").classList.toggle("hidden", !si);
+}
+
+function getValue(id) {
+  return document.getElementById(id).value;
+}
+
+function getData() {
+  const pruebas = document.querySelector('input[name="pruebas"]:checked')?.value || "No";
+
+  const materiales = [...document.querySelectorAll(".material-item")].map(el => ({
+  componente: el.dataset.componente || "",
+  proveedor: el.dataset.proveedor || "",
+  referencia: el.dataset.referencia || "",
+  lote: el.dataset.lote || "",
+  observaciones: el.dataset.observaciones || ""
+}));
+
+  const fases = [...document.querySelectorAll(".bloque-fase")].map((bloque, index) => ({
+  numero: index + 1,
+  nombre: bloque.querySelector(".bloque-fase-titulo strong").textContent.replace(/^\d+\.\s*/, ""),
+  procesos: [...bloque.querySelectorAll(".fase-opcion:checked")]
+    .map(cb => cb.value)
+}));
+
+const validacionProceso = {
+  tecnico: getValue("tecnicoFases"),
+  fecha: getValue("fechaFases"),
+  vistoBueno: document.getElementById("vistoBuenoFases")?.checked || false
+};
+
+  return {
+    numeroOrden:getValue("numeroOrden"),
+    fechaEmision:getValue("fechaEmision"),
+    fechaEntrega:getValue("fechaEntrega"),
+    paciente:getValue("paciente"),
+    parteAfectada:getValue("parteAfectada"),
+    diagnostico:getValue("diagnostico"),
+    prescriptor:getValue("prescriptor"),
+    colegiado:getValue("colegiado"),
+    lugarTrabajo:getValue("lugarTrabajo"),
+    especialidad:getValue("especialidad"),
+    medidas:getValue("medidas"),
+    metodoMedidas:getValue("metodoMedidas"),
+    tecnicoMedidas:getValue("tecnicoMedidas"),
+    pruebas,
+    pruebasCuales:getValue("pruebasCuales"),
+    tipoProducto:getValue("tipoProducto"),
+    nombreProducto:getValue("nombreProducto"),
+    posicion:getValue("posicion"),
+    tecnicoResponsable:getValue("tecnicoResponsable"),
+    materiales,
+    fases,
+    validacionProceso,
+    observaciones:getValue("observaciones")
+  };
+}
+
+function setValue(id, value) {
+  const el = document.getElementById(id);
+  if (el && value !== undefined) el.value = value;
+}
+
+function generarResumen() {
+  const d = getData();
+  const esc = x => String(x ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+
+  let html = `
+    <h3>ORDEN DE TALLER Nº ${esc(d.numeroOrden || "—")}</h3>
+    <div class="summary-grid">
+      <div><strong>Fecha emisión:</strong> ${esc(d.fechaEmision || "—")}</div>
+      <div><strong>Entrega prevista:</strong> ${esc(d.fechaEntrega || "—")}</div>
+      <div><strong>Paciente:</strong> ${esc(d.paciente || "—")}</div>
+      <div><strong>Parte afectada:</strong> ${esc(d.parteAfectada || "—")}</div>
+      <div><strong>Diagnóstico:</strong> ${esc(d.diagnostico || "—")}</div>
+      <div><strong>Producto:</strong> ${esc(d.tipoProducto || "—")}</div>
+      <div><strong>Posición:</strong> ${esc(d.posicion || "—")}</div>
+      <div><strong>Técnico responsable:</strong> ${esc(d.tecnicoResponsable || "—")}</div>
+      <div><strong>Prescriptor:</strong> ${esc(d.prescriptor || "—")}</div>
+      <div><strong>Nº colegiado:</strong> ${esc(d.colegiado || "—")}</div>
+    </div>
+    <hr>
+    <p><strong>Medidas:</strong><br>${esc(d.medidas || "—").replaceAll("\n","<br>")}</p>
+    <p><strong>Método:</strong> ${esc(d.metodoMedidas || "—")} &nbsp; | &nbsp; <strong>Técnico:</strong> ${esc(d.tecnicoMedidas || "—")}</p>
+    <p><strong>Pruebas adjuntas:</strong> ${esc(d.pruebas)}${d.pruebas === "Sí" ? " — " + esc(d.pruebasCuales) : ""}</p>
+    <h3>Materiales</h3>`;
+
+  if (d.materiales.length) {
+    html += "<ul>" + d.materiales.map(m =>
+      `<li><strong>${esc(m.componente || "Sin especificar")}</strong>` +
+      `${m.proveedor ? " — proveedor: " + esc(m.proveedor) : ""}` +
+      `${m.referencia ? " — ref.: " + esc(m.referencia) : ""}` +
+      `${m.lote ? " — lote: " + esc(m.lote) : ""}` +
+      `${m.observaciones ? " — " + esc(m.observaciones) : ""}</li>`
+    ).join("") + "</ul>";
+  } else html += "<p>—</p>";
+
+ html += "<h3>Fases del proceso</h3>";
+
+  if (d.fases && d.fases.length) {
+    html += "<ol>";
+
+    d.fases.forEach(f => {
+      html += `<li><strong>${esc(f.nombre || "Fase sin nombre")}</strong>`;
+
+      if (f.procesos && f.procesos.length) {
+        html += "<ul>";
+        f.procesos.forEach(proceso => {
+          html += `<li>${esc(proceso)}</li>`;
+        });
+        html += "</ul>";
+      } else {
+        html += "<ul><li>—</li></ul>";
+      }
+
+      html += "</li>";
+    });
+
+    html += "</ol>";
+  } else {
+    html += "<p>—</p>";
+  }
+
+  html += `<h3>Observaciones generales</h3><p>${esc(d.observaciones || "—").replaceAll("\n","<br>")}</p>`;
+
+  document.getElementById("resumen").innerHTML = html;
+  document.getElementById("resumenSection").classList.remove("hidden");
+  document.getElementById("resumenSection").scrollIntoView({behavior:"smooth"});
+}
+
+function guardarDatos() {
+  localStorage.setItem("ordenTallerOrtoprotesis", JSON.stringify(getData()));
+  alert("Datos guardados en este navegador.");
+}
+
+function cargarDatos() {
+  const raw = localStorage.getItem("ordenTallerOrtoprotesis");
+  if (!raw) { alert("No hay datos guardados en este navegador."); return; }
+  const d = JSON.parse(raw);
+
+  Object.entries(d).forEach(([key,value]) => {
+    if (["materiales","fases","pruebas"].includes(key)) return;
+    setValue(key, value);
+  });
+
+  const radio = document.querySelector(`input[name="pruebas"][value="${d.pruebas}"]`);
+  if (radio) radio.checked = true;
+  togglePruebas();
+
+  document.getElementById("materiales").innerHTML = "";
+  document.getElementById("fases").innerHTML = "";
+  materialCount = 0; faseCount = 0;
+  (d.materiales || []).forEach(addMaterial);
+  (d.fases || []).forEach(addFase);
+  alert("Datos recuperados.");
+}
+
+function limpiarFormulario() {
+  if (!confirm("¿Seguro que quieres empezar una nueva orden?")) return;
+  document.getElementById("ordenForm").reset();
+  document.getElementById("materiales").innerHTML = "";
+  document.getElementById("fases").innerHTML = "";
+  materialCount = 0; faseCount = 0;
+  document.getElementById("resumenSection").classList.add("hidden");
+  togglePruebas();
+}
+
+document.getElementById("fechaEmision").valueAsDate = new Date();
+addFase();
+</script>
+</body>
+</html>
