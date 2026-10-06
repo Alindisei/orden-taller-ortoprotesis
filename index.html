@@ -605,7 +605,7 @@
   <h2>2. Datos del paciente</h2>
   <div class="grid">
     <div class="field">
-      <label>Nombre/acrónimo</label>
+      <label>Nombre completo/acrónimo</label>
       <input id="paciente" type="text">
     </div>
     <div class="field">
@@ -796,6 +796,20 @@
       <label>Fecha de finalización</label>
       <input id="fechaFases" type="date">
     </div>
+
+      <!--Apto no apto-->
+      <!-- Apto / No Apto -->
+<div class="check-row">
+    <label>
+        <input type="radio" name="validacion" value="Apto" onchange="toggleApto()">
+        Apto
+    </label>
+
+    <label>
+        <input type="radio" name="validacion" value="No Apto" checked onchange="toggleApto()">
+        No Apto
+    </label>
+</div>
   </div>
 </section>
 
@@ -1099,6 +1113,17 @@ function togglePruebas() {
   document.getElementById("campoPruebas").classList.toggle("hidden", !si);
 }
 
+
+function toggleApto() {
+    const seleccionado = document.querySelector('input[name="validacion"]:checked');
+
+    if (!seleccionado) return;
+
+    const apto = seleccionado.value === "Apto";
+
+    console.log("Validación:", apto ? "Apto" : "No Apto");
+}
+
 function getValue(id) {
   return document.getElementById(id).value;
 }
@@ -1122,9 +1147,9 @@ function getData() {
 }));
 
 const validacionProceso = {
-  tecnico: getValue("tecnicoFases"),
-  fecha: getValue("fechaFases"),
-  vistoBueno: document.getElementById("vistoBuenoFases")?.checked || false
+    tecnico: getValue("tecnicoFases"),
+    fecha: getValue("fechaFases"),
+    resultado: document.querySelector('input[name="validacion"]:checked')?.value || ""
 };
 
   return {
